@@ -30,12 +30,10 @@ export class UserService {
             }
         });
 
-        const token = this.jwtService.sign({email: createUserDto.email });
-
         return {
             id: user.id,
             email: user.email,
-            token
+            token: this.jwtService.sign({ id: user.id, email: user.email })
         }
     }
 
