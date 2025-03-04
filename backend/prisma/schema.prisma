@@ -13,10 +13,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
 model User {
-  id         Int     @id      @default(autoincrement())
-  email      String  @unique
-  password   String
-  firstName String
-  lastName  String
+  id           Int           @id      @default(autoincrement())
+  email        String        @unique
+  password     String
+  firstName    String
+  lastName     String
+  categories   Category[]
+  transactions Transaction[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Category {
+  id          Int           @id      @default(autoincrement())
+  userId      Int
+  title       String        @unique
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transaction Transaction[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Transaction {
+  id         Int              @id  @default(autoincrement())
+  userId     Int
+  categoryId Int?
+  title      String
+  type       TransactionType
+  amount     Float
+  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 }
