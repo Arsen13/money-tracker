@@ -6,7 +6,7 @@ import { IUser } from "src/types/types";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-    constructor(private readonly configService: ConfigService) {
+    constructor(configService: ConfigService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
@@ -15,6 +15,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(user: IUser) {
-        return { id: user.id, email: user.email };
+        return { 
+            id: user.id, 
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+        };
     }
 }

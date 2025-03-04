@@ -27,12 +27,16 @@ export class UserService {
             data: {
                 email: createUserDto.email,
                 password: hashedPassword,
+                firstName: createUserDto.firstName,
+                lastName: createUserDto.lastName,
             }
         });
 
         return {
             id: user.id,
             email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
             token: this.jwtService.sign({ id: user.id, email: user.email })
         }
     }
