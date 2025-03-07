@@ -33,7 +33,7 @@ model User {
 model Category {
   id          Int           @id      @default(autoincrement())
   userId      Int
-  title       String        @unique
+  title       String        
   user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   transaction Transaction[]
   createdAt   DateTime      @default(now())
