@@ -3,6 +3,7 @@ import { PrismaService } from "src/prisma.service";
 import { CreateTransactionDto } from "./dto/create-transaction.dto";
 import { Transaction } from "@prisma/client";
 import { UpdateTransactionDto } from "./dto/update-transaction.dto";
+import { SortByDto } from "./dto/sortBy.dto";
 
 @Injectable()
 export class TransactionService {
@@ -25,6 +26,21 @@ export class TransactionService {
             where: { userId },
             orderBy: { createdAt: "desc" },
         });
+    }
+
+    async findAllWithPagination(
+        userId: number,
+        page: number,
+        limit: number,
+        sortBy: string,
+        sortOrder: string,
+    ): Promise<Transaction[]> {
+        return await this.prisma.transaction.findMany({
+            where: { userId },
+            orderBy: { [sortBy]: sortOrder },
+            skip: (page - 1) * limit,
+            take: limit,
+        })
     }
 
     async update(updateTransactionDto: UpdateTransactionDto, transactionId: number, userId: number): Promise<Transaction> {

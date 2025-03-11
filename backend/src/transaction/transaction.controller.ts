@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Query, Req, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TransactionService } from "./transaction.service";
 import { JwtAuthGuard } from "src/auth/guards/jwt-auth.guard";
 import { CreateTransactionDto } from "./dto/create-transaction.dto";
 import { Transaction } from "@prisma/client";
 import { UpdateTransactionDto } from "./dto/update-transaction.dto";
+import { SortByDto } from "./dto/sortBy.dto";
+import { SortOrderDto } from "./dto/sortOrder.dto";
 
 @Controller('transactions')
 @UseGuards(JwtAuthGuard)
@@ -40,5 +42,23 @@ export class TransactionController {
         @Req() req
     ) {
         return this.transactionService.remove(transactionId, +req.user.id);
+    }
+
+    @Get('pagination')
+    @UsePipes(new ValidationPipe())
+    findAllWithPagination(
+        @Req() req,
+        @Query('page', ParseIntPipe) page: number,
+        @Query('limit', ParseIntPipe) limit: number,
+        @Query(new ValidationPipe({ transform: true })) sortBy: SortByDto,
+        @Query(new ValidationPipe({ transform: true })) sortOrder: SortOrderDto,
+    ) {
+        return this.transactionService.findAllWithPagination(
+            +req.user.id,
+            page,
+            limit,
+            sortBy.sortBy,
+            sortOrder.sortOrder
+        );
     }
 }
