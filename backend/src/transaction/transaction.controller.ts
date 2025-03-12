@@ -61,4 +61,9 @@ export class TransactionController {
             sortOrder.sortOrder
         );
     }
+
+    @Get('graphics')
+    findGraphicsData(@Req() req) {
+        return this.transactionService.findGraphicsData(+req.user.id);
+    }
 }

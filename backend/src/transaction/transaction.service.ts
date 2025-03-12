@@ -43,6 +43,33 @@ export class TransactionService {
         })
     }
 
+    async findGraphicsData(userId: number) {
+        const incomeSum = await this.prisma.transaction.aggregate({
+            where: { 
+                userId,
+                type: 'INCOME',
+            },
+            _sum: {
+                amount: true,
+            }
+        });
+
+        const expenseSum = await this.prisma.transaction.aggregate({
+            where: {
+                userId,
+                type: 'EXPENSE',
+            },
+            _sum: {
+                amount: true,
+            }
+        });
+
+        return {
+            income: incomeSum._sum.amount,
+            expense: expenseSum._sum.amount,
+        }
+    }
+
     async update(updateTransactionDto: UpdateTransactionDto, transactionId: number, userId: number): Promise<Transaction> {
         const transaction = await this.prisma.transaction.findFirst({
             where: {
