@@ -3,7 +3,7 @@ import { PrismaService } from "src/prisma.service";
 import { CreateTransactionDto } from "./dto/create-transaction.dto";
 import { Transaction } from "@prisma/client";
 import { UpdateTransactionDto } from "./dto/update-transaction.dto";
-import { SortByDto } from "./dto/sortBy.dto";
+import { TPeriod } from "src/types/types";
 
 @Injectable()
 export class TransactionService {
@@ -44,29 +44,39 @@ export class TransactionService {
     }
 
     async findGraphicsData(userId: number) {
-        const incomeSum = await this.prisma.transaction.aggregate({
-            where: { 
-                userId,
-                type: 'INCOME',
-            },
-            _sum: {
-                amount: true,
-            }
-        });
-
-        const expenseSum = await this.prisma.transaction.aggregate({
+        const result = await this.prisma.transaction.groupBy({
             where: {
                 userId,
-                type: 'EXPENSE',
             },
+            by: ['type'],
             _sum: {
                 amount: true,
             }
         });
 
         return {
-            income: incomeSum._sum.amount,
-            expense: expenseSum._sum.amount,
+            income: result[0]._sum.amount,
+            expense: result[1]._sum.amount,            
+        };
+    }
+
+    async findTransactionByPeriod(userId: number, period: TPeriod) {
+        const transactionsData: Transaction[] = await this.prisma.$queryRaw`
+            SELECT 
+                DATE_TRUNC(${period}, "createdAt") as period,
+                type,
+                SUM(amount) as total
+            FROM "Transaction"
+            WHERE "userId"=${userId}
+            GROUP BY period, type
+            ORDER BY period`;
+
+        const incomeData = transactionsData.filter(transaction => transaction.type == "INCOME");
+        const expenseData = transactionsData.filter(transaction => transaction.type == "EXPENSE");
+
+        return {
+            incomeData,
+            expenseData
         }
     }
 

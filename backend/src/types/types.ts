@@ -4,3 +4,5 @@ export interface IUser {
     firstName: string;
     lastName: string;
 }
+
+export type TPeriod = 'week' | 'month' | 'year';

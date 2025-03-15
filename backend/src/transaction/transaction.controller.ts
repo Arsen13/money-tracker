@@ -6,6 +6,7 @@ import { Transaction } from "@prisma/client";
 import { UpdateTransactionDto } from "./dto/update-transaction.dto";
 import { SortByDto } from "./dto/sortBy.dto";
 import { SortOrderDto } from "./dto/sortOrder.dto";
+import { GroupByDto } from "./dto/groupBy.dto";
 
 @Controller('transactions')
 @UseGuards(JwtAuthGuard)
@@ -65,5 +66,14 @@ export class TransactionController {
     @Get('graphics')
     findGraphicsData(@Req() req) {
         return this.transactionService.findGraphicsData(+req.user.id);
+    }
+
+    @Get('groupBy')
+    @UsePipes(new ValidationPipe())
+    findTransactionByPeriod(
+        @Req() req,
+        @Body() groupByDto: GroupByDto
+    ) {
+        return this.transactionService.findTransactionByPeriod(+req.user.id, groupByDto.period);
     }
 }
