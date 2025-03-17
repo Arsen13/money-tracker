@@ -1,66 +1,76 @@
 'use client';
 
+import Link from "next/link";
+import AuthButton from "../Auth/AuthButton";
+import InputField from "../Auth/InputField";
+import { SignUpSchema } from "@/lib/types";
+import toast from "react-hot-toast";
+
 export default function SignUpForm() {
+
+  const signUp = async (formData: FormData) => {
+    const userData = {
+      firstName: formData.get('firstName'),
+      lastName: formData.get('lastName'),
+      email: formData.get('email'),
+      password: formData.get('password'),
+      confirmPassword: formData.get('confirmPassword'),
+    }
+    const result = SignUpSchema.safeParse(userData);
+
+    if (!result.success) {
+      let errorMessage = '';
+      result.error.issues.forEach((issue) => errorMessage += `${issue.path[0]}: ${issue.message}. \n`);
+      toast.error(errorMessage);
+      return;
+    }
+
+    console.log(result.data);
+  }
+
   return (
-    <form className="w-72 mt-4">
-      <div className="flex flex-col my-2">
-        <label>
-          <span>First name</span>
-        </label>
-        <input
-          type="text"
-          name="firstName"
-          placeholder="John"
-          className="h-8 border border-amber-100 rounded-md placeholder:p-2 placeholder:text-sm placeholder:italic"
-        />
-      </div>
+    <form action={signUp} className="w-72 mt-4">
+      <InputField
+        type="text"
+        name="firstName"
+        label="First name"
+        placeholder="John"
+      />
+
+      <InputField
+        type="text"
+        name="lastName"
+        label="Last name"
+        placeholder="Doe"
+      />
+
+      <InputField
+        type="text"
+        name="email"
+        label="Email"
+        placeholder="johndoe@gmail.com"
+      />
+
+      <InputField
+        type="password"
+        name="password"
+        label="Password"
+        placeholder="qwerty"
+      />
+      
+      <InputField
+        type="password"
+        name="confirmPassword"
+        label="Confirm password"
+        placeholder="qwerty"
+      />
 
       <div className="flex flex-col my-2">
-        <label>
-          <span>Last name</span>
-        </label>
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Doe"
-          className="h-8 border border-amber-100 rounded-md placeholder:p-2 placeholder:text-sm placeholder:italic"
-        />
-      </div>
+        <Link href='/login' className="hover:underline">
+            Already have an account?
+        </Link>
 
-      <div className="flex flex-col my-2">
-        <label>
-          <span>Email</span>
-        </label>
-        <input
-          type="text"
-          name="email"
-          placeholder="johndoe@gmail.com"
-          className="h-8 border border-amber-100 rounded-md placeholder:p-2 placeholder:text-sm placeholder:italic"
-        />
-      </div>
-
-      <div className="flex flex-col my-2">
-        <label>
-          <span>Password</span>
-        </label>
-        <input
-          type="password"
-          name="password"
-          placeholder="qwerty"
-          className="h-8 border border-amber-100 rounded-md placeholder:p-2 placeholder:text-sm placeholder:italic"
-        />
-      </div>
-
-      <div className="flex flex-col my-2">
-        <label>
-          <span>Confirm password</span>
-        </label>
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="qwerty"
-          className="h-8 border border-amber-100 rounded-md placeholder:p-2 placeholder:text-sm placeholder:italic"
-        />
+        <AuthButton title={'SignUp'} />
       </div>
     </form>
   )
