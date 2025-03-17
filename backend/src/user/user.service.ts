@@ -2,7 +2,6 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -19,6 +18,7 @@ export class UserService {
             }
         });
         if (existUser) throw new BadRequestException(`User with email: ${createUserDto.email} already exist`);
+        if (createUserDto.password !== createUserDto.confirmPassword) throw new BadRequestException(`Passwords don't match`);
         
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
