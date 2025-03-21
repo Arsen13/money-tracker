@@ -3,7 +3,7 @@ import { PrismaService } from "src/prisma.service";
 import { CreateTransactionDto } from "./dto/create-transaction.dto";
 import { Transaction } from "@prisma/client";
 import { UpdateTransactionDto } from "./dto/update-transaction.dto";
-import { TPeriod } from "src/types/types";
+import { TPeriod, TTransactionByPeriod, TTransactionByPeriodMap } from "src/types/types";
 
 @Injectable()
 export class TransactionService {
@@ -61,7 +61,7 @@ export class TransactionService {
     }
 
     async findTransactionByPeriod(userId: number, period: TPeriod) {
-        const transactionsData: Transaction[] = await this.prisma.$queryRaw`
+        const transactionsData: TTransactionByPeriod = await this.prisma.$queryRaw`
             SELECT 
                 DATE_TRUNC(${period}, "createdAt") as period,
                 type,
@@ -69,15 +69,25 @@ export class TransactionService {
             FROM "Transaction"
             WHERE "userId"=${userId}
             GROUP BY period, type
-            ORDER BY period`;
+            ORDER BY period desc
+            LIMIT 6`;
 
-        const incomeData = transactionsData.filter(transaction => transaction.type == "INCOME");
-        const expenseData = transactionsData.filter(transaction => transaction.type == "EXPENSE");
+        const resultMap = new Map<string, TTransactionByPeriodMap>();
 
-        return {
-            incomeData,
-            expenseData
+        for (let item of transactionsData) {
+            const date = new Date(item.period).toLocaleString('en-US', { month: "long" });
+
+            if (!resultMap.has(date)) {
+                resultMap.set(date, { period: date, income: 0, expense: 0});
+            }
+
+            let current = resultMap.get(date)!;
+
+            if (item.type == "INCOME") current.income += item.total;
+            else if (item.type == "EXPENSE") current.expense += item.total;
         }
+
+        return Array.from(resultMap.values()).reverse();
     }
 
     async update(updateTransactionDto: UpdateTransactionDto, transactionId: number, userId: number): Promise<Transaction> {
