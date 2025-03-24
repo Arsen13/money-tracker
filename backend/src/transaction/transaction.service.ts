@@ -40,6 +40,9 @@ export class TransactionService {
             orderBy: { [sortBy]: sortOrder },
             skip: (page - 1) * limit,
             take: limit,
+            include: {
+                category: true,
+            },
         })
     }
 
