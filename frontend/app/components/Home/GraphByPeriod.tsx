@@ -36,7 +36,7 @@ const chartConfig = {
 
 export function GraphByPeriod() {
   return (
-    <Card  className="w-[945px] bg-widget gap-0 border-none h-96">
+    <Card className="w-[945px] bg-widget gap-0 border-none h-96">
       <CardHeader>
         <CardDescription className="text-center text-lg text-white">
           Showing total transaction amount for the last 6 months

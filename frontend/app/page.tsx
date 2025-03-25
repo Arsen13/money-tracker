@@ -6,8 +6,8 @@ import Navbar from "./components/Nav/Navbar";
 export default function Home() {
   return (
     <>
-      <Navbar/>
-
+      <Navbar />
+      
       <div className="flex justify-center gap-20 mt-10">
         <div className="flex gap-8 flex-wrap justify-center">
           <LastOperationWidget />
