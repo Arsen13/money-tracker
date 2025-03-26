@@ -18,6 +18,13 @@ export const SignUpSchema = z.
         path: ['confirmPassword'],
     });
 
+export const CreateTransactionSchema = z.object({
+    title: z.string().min(3),
+    amount: z.number(),
+    category: z.string(),
+    type: z.string(),
+})
+
 export interface InputFieldProps {
     type: string;
     name: string;
