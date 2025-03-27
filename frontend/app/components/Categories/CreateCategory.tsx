@@ -42,7 +42,7 @@ export default function CreateCategory() {
 
             <button
                 type="submit"
-                className="bg-customBlue text-md px-2 py-1 rounded-md cursor-pointer hover:bg-orange-300 hover:text-widget duration-500 mt-3.5"
+                className="bg-emerald-500 text-widget text-md px-6 py-2 rounded-md cursor-pointer hover:bg-emerald-800 hover:text-white duration-500"
             >
                 Create
             </button>
