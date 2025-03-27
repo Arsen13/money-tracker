@@ -25,6 +25,10 @@ export const CreateTransactionSchema = z.object({
     type: z.string(),
 })
 
+export const CreateCategorySchema = z.object({
+    title: z.string().min(3),
+})
+
 export interface InputFieldProps {
     type: string;
     name: string;

@@ -13,7 +13,7 @@ export default function Navbar() {
             <div className="flex gap-14 text-xl">
                 <Link href='/' className="hover:text-sky-500 duration-300">Dashboard</Link>
                 <Link href='/transactions' className="hover:text-sky-500 duration-300">Transactions</Link>
-                <Link href='' className="hover:text-sky-500 duration-300">Categories</Link>
+                <Link href='/categories' className="hover:text-sky-500 duration-300">Categories</Link>
             </div>
             <div className="flex items-center gap-8 text-white">
                 <FaRegCircleUser className="w-7 h-7 text-white" />
