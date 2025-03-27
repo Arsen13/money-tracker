@@ -10,14 +10,11 @@ export default function CreateCategory() {
 
         const formData = new FormData(event.currentTarget);
 
-        const transaction = {
+        const category = {
             title: formData.get('title'),
-            amount: Number(formData.get('amount')),
-            category: formData.get('category'),
-            type: formData.get('type'),
         };
 
-        const result = CreateCategorySchema.safeParse(transaction);
+        const result = CreateCategorySchema.safeParse(category);
 
         if (!result.success) {
             let errorMessage = '';
