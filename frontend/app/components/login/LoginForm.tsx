@@ -2,33 +2,25 @@
 
 import Link from "next/link";
 import AuthButton from "../Auth/AuthButton";
-import toast from "react-hot-toast";
-import { LoginSchema } from "@/lib/types";
 import InputField from "../Auth/InputField";
+import { login } from "@/lib/authActions";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
 
-  const login = async (formData: FormData) => {
+  const router = useRouter();
 
-    const userData = {
-      email: formData.get('email'),
-      password: formData.get('password'),
+  const handleLogin = async (formData: FormData) => {
+    try {
+      await login(formData, router);
+    } catch (error) {
+      toast.error(String(error));
     }
-
-    const result = LoginSchema.safeParse(userData);
-
-    if (!result.success) {
-      let errorMessage = '';
-      result.error.issues.forEach((issue) => errorMessage += `${issue.path[0]}: ${issue.message}. \n`);
-      toast.error(errorMessage);
-      return;
-    }
-
-    console.log(result.data)
   }
 
   return (
-    <form action={login}>
+    <form action={handleLogin}>
       <InputField
         type="text"
         name="email"
