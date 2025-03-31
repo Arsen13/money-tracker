@@ -3,33 +3,24 @@
 import Link from "next/link";
 import AuthButton from "../Auth/AuthButton";
 import InputField from "../Auth/InputField";
-import { SignUpSchema } from "@/lib/types";
 import toast from "react-hot-toast";
+import { signup } from "@/lib/authActions";
+import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
 
-  const signUp = async (formData: FormData) => {
-    const userData = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      password: formData.get('password'),
-      confirmPassword: formData.get('confirmPassword'),
-    }
-    const result = SignUpSchema.safeParse(userData);
+  const router = useRouter();
 
-    if (!result.success) {
-      let errorMessage = '';
-      result.error.issues.forEach((issue) => errorMessage += `${issue.path[0]}: ${issue.message}. \n`);
-      toast.error(errorMessage);
-      return;
+  const handleSignUp = async (formData: FormData) => {
+    try {
+      await signup(formData, router);
+    } catch (error) {
+      toast.error(String(error));
     }
-
-    console.log(result.data);
   }
 
   return (
-    <form action={signUp} className="w-72 mt-4">
+    <form action={handleSignUp} className="w-72 mt-4">
       <InputField
         type="text"
         name="firstName"
