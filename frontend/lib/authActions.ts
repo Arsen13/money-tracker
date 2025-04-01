@@ -14,14 +14,18 @@ export async function login(formData: FormData, router: any) {
     }
 
     try {
-        const response = await axiosInstance.post('auth/login', result.data);
-        const { token } = response.data;
+        const response = await fetch('/api/auth/login', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(result.data),
+        });
 
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('token', token);
-        } 
+        const data = await response.json();
 
-        router.push('/');
+        if (data.success) router.push('/');
+        else toast.error('Login failed');
 
     } catch(error) {
         if (error instanceof AxiosError) {
@@ -43,14 +47,18 @@ export async function signup(formData: FormData, router: any) {
     }
 
     try {
-        const response = await axiosInstance.post('user', result.data);
-        const { token } = response.data;
+        const response = await fetch('/api/auth/signup', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(result.data),
+        });
 
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('token', token);
-        }
-        
-        router.push('/');
+        const data = await response.json();
+
+        if (data.success) router.push('/');
+        else toast.error('Signup failed');
 
     } catch (error) {
         if (error instanceof AxiosError) {
