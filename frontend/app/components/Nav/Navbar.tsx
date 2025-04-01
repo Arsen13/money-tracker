@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { CiLogout } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
+import LogoutBtn from "./LogoutBtn";
 
 export default function Navbar() {
     return(
@@ -21,7 +21,7 @@ export default function Navbar() {
                     <p className="text-sm">John Doe</p>
                     <p className="text-xs">johndoe@gmail.com</p>
                 </div>
-                <CiLogout className="w-8 h-8 hover:text-red-500 text-white duration-300 cursor-pointer" />
+                <LogoutBtn />
             </div>
         </div>
     )

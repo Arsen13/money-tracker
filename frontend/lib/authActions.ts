@@ -1,6 +1,5 @@
 import toast from "react-hot-toast";
 import { LoginSchema, SignUpSchema } from "./types";
-import { axiosInstance } from "./axiosInstance";
 import { AxiosError } from "axios";
 
 export async function login(formData: FormData, router: any) {
@@ -66,5 +65,24 @@ export async function signup(formData: FormData, router: any) {
         } else {
             console.log(error);
         }
+    }
+}
+
+export async function logout(router: any) {
+    try {
+        const response = await fetch('/api/auth/logout', {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        const data = await response.json()
+
+        if (data.success) router.push('/login');
+        else toast.error("Logout error");
+
+    } catch (error) {
+        toast.error(String(error));
     }
 }
