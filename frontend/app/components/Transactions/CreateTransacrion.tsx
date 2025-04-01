@@ -58,6 +58,7 @@ export default function CreateTransaction() {
 					<label htmlFor="category">
 						<span>Category: </span>
 						<select 
+							id="category"
 							name="category" 
 							className="bg-customBlue h-8 text-sm rounded-md focus:ring-blue-500 px-2"
 							required
