@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { FaRegCircleUser } from "react-icons/fa6";
-import LogoutBtn from "./LogoutBtn";
+import UserInfo from "./UserInfo";
 
 export default function Navbar() {
     return(
@@ -10,19 +9,14 @@ export default function Navbar() {
                     Money <span className="text-sky-500">Tracker</span>
                 </h1>
             </div>
+            
             <div className="flex gap-14 text-xl">
                 <Link href='/' className="hover:text-sky-500 duration-300">Dashboard</Link>
                 <Link href='/transactions' className="hover:text-sky-500 duration-300">Transactions</Link>
                 <Link href='/categories' className="hover:text-sky-500 duration-300">Categories</Link>
             </div>
-            <div className="flex items-center gap-8 text-white">
-                <FaRegCircleUser className="w-7 h-7 text-white" />
-                <div className="flex flex-col gap-1">
-                    <p className="text-sm">John Doe</p>
-                    <p className="text-xs">johndoe@gmail.com</p>
-                </div>
-                <LogoutBtn />
-            </div>
+
+            <UserInfo />
         </div>
     )
 }

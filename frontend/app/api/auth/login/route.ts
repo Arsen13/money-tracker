@@ -7,7 +7,7 @@ export async function POST(req: Request) {
         const body = await req.json();
         const response = await axiosInstance.post('auth/login', body);
 
-        const { token } = response.data;
+        const { id, email, firstName, lastName, token, } = response.data;
 
         (await cookies()).set('token', token, {
             httpOnly: true,
@@ -15,7 +15,10 @@ export async function POST(req: Request) {
             expires: new Date(Date.now() + 1 * 60 * 60 * 1000),
         })
 
-        return NextResponse.json({ success: true });
+        return NextResponse.json({
+            success: true,
+            user: { id, email, firstName, lastName },
+        });
 
     } catch (error) {
         return NextResponse.json({ error: "Next server error" }, { status: 500 });

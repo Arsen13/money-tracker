@@ -23,7 +23,10 @@ export async function login(formData: FormData, router: any) {
 
         const data = await response.json();
 
-        if (data.success) router.push('/');
+        if (data.success) {
+            localStorage.setItem('user', JSON.stringify(data.user));
+            router.push('/');
+        }
         else toast.error('Login failed');
 
     } catch(error) {
@@ -56,7 +59,10 @@ export async function signup(formData: FormData, router: any) {
 
         const data = await response.json();
 
-        if (data.success) router.push('/');
+        if (data.success) {
+            localStorage.setItem('user', JSON.stringify(data.user));
+            router.push('/');
+        }
         else toast.error('Signup failed');
 
     } catch (error) {

@@ -11,7 +11,8 @@ export default function LogoutBtn() {
 
     const handleLogout = async () => {
         try {
-            await logout(router)
+            await logout(router);
+            localStorage.clear();
         } catch (error) {
             toast.error(String(error))
         }

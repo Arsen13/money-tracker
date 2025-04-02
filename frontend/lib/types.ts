@@ -39,3 +39,10 @@ export interface InputFieldProps {
 export type AuthButtonProps = {
     title: string;
 };
+
+export type UserT = {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+} | null;
