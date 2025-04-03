@@ -116,6 +116,41 @@ export class TransactionService {
         ];
     }
 
+    async findLastTransactions(userId: number) {
+        const incomeTransaction = await this.prisma.transaction.findFirst({
+            where: { 
+                userId,
+                type: "INCOME",
+            },
+            orderBy: [{ createdAt: 'desc' }],
+            include: {
+                category: true
+            }
+        });
+
+        const expenseTransaction = await this.prisma.transaction.findFirst({
+            where: {
+                userId,
+                type: "EXPENSE",
+            },
+            orderBy: [{ createdAt: 'desc' }],
+            include: {
+                category: true
+            }
+        });
+
+        return {
+            income: {
+                amount: incomeTransaction?.amount,
+                category: incomeTransaction?.category?.title,
+            },
+            expense: {
+                amount: expenseTransaction?.amount,
+                category: expenseTransaction?.category?.title,
+            }
+        }
+    }
+
     async update(updateTransactionDto: UpdateTransactionDto, transactionId: number, userId: number): Promise<Transaction> {
         const transaction = await this.prisma.transaction.findFirst({
             where: {

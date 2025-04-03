@@ -78,4 +78,9 @@ export class TransactionController {
     findTotalCountOfTransaction(@Req() req) {
         return this.transactionService.findTotalCountOfTransaction(+req.user.id);
     }
+
+    @Get('last')
+    findLastTransactions(@Req() req) {
+        return this.transactionService.findLastTransactions(+req.user.id);
+    }
 }
