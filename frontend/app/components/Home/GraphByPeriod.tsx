@@ -14,14 +14,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-
-const chartData = [
-    { "period": "December", "income": 3300, "expense": 2341 },
-    { "period": "January", "income": 4679, "expense": 2250 },
-    { "period": "February", "income": 1300, "expense": 2600 },
-    { "period": "March", "income": 850, "expense": 510 },
-    { "period": "April", "income": 5341, "expense": 6230 }
-];
+import { useEffect, useState } from "react";
+import { axiosInstance } from "@/lib/axiosInstance";
 
 const chartConfig = {
   income: {
@@ -35,6 +29,18 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function GraphByPeriod() {
+
+  const [chartData, setChartData] = useState();
+
+  useEffect(() => {
+    async function getGraphicData() {
+      const res = await axiosInstance.get('transactions/groupBy');
+      setChartData(res.data);
+    }
+
+    getGraphicData();
+  }, []);
+
   return (
     <Card className="w-[945px] bg-widget gap-0 border-none h-96">
       <CardHeader>
