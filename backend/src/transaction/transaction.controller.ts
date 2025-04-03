@@ -76,4 +76,9 @@ export class TransactionController {
     ) {
         return this.transactionService.findTransactionByPeriod(+req.user.id, groupByDto.period);
     }
+
+    @Get('total')
+    findTotalCountOfTransaction(@Req() req) {
+        return this.transactionService.findTotalCountOfTransaction(+req.user.id);
+    }
 }

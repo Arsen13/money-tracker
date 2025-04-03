@@ -93,6 +93,23 @@ export class TransactionService {
         return Array.from(resultMap.values()).reverse();
     }
 
+    async findTotalCountOfTransaction(userId: number) {
+        const totalTransactions =  await this.prisma.transaction.groupBy({
+            by: ['type'],
+            _sum: {
+                amount: true,
+            },
+            where: {
+                userId
+            }
+        });
+
+        return {
+            'Income': totalTransactions[0]?._sum.amount || 0,
+            'Expense': totalTransactions[1]?._sum.amount || 0,
+        }
+    }
+
     async update(updateTransactionDto: UpdateTransactionDto, transactionId: number, userId: number): Promise<Transaction> {
         const transaction = await this.prisma.transaction.findFirst({
             where: {
