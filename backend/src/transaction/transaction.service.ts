@@ -96,7 +96,7 @@ export class TransactionService {
     async findTotalCountOfTransaction(userId: number) {
         const totalTransactions =  await this.prisma.transaction.groupBy({
             by: ['type'],
-            _sum: {
+            _count: {
                 amount: true,
             },
             where: {
@@ -104,10 +104,18 @@ export class TransactionService {
             }
         });
 
-        return {
-            'Income': totalTransactions[0]?._sum.amount || 0,
-            'Expense': totalTransactions[1]?._sum.amount || 0,
-        }
+        return [
+            {
+                name: 'Income',
+                value: totalTransactions[0]?._count.amount || 0,
+            },
+            {
+                name: 'Expense',
+                value: totalTransactions[1]?._count.amount || 0,
+            }
+        ]
+        // { name: "Income", value: 215 },
+        // { name: "Expense", value: 126 }
     }
 
     async update(updateTransactionDto: UpdateTransactionDto, transactionId: number, userId: number): Promise<Transaction> {
