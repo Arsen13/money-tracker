@@ -113,9 +113,7 @@ export class TransactionService {
                 name: 'Expense',
                 value: totalTransactions[1]?._count.amount || 0,
             }
-        ]
-        // { name: "Income", value: 215 },
-        // { name: "Expense", value: 126 }
+        ];
     }
 
     async update(updateTransactionDto: UpdateTransactionDto, transactionId: number, userId: number): Promise<Transaction> {
