@@ -63,10 +63,10 @@ export class TransactionService {
         };
     }
 
-    async findTransactionByPeriod(userId: number, period: TPeriod) {
+    async findTransactionByPeriod(userId: number) {
         const transactionsData: TTransactionByPeriod = await this.prisma.$queryRaw`
             SELECT 
-                DATE_TRUNC(${period}, "createdAt") as period,
+                DATE_TRUNC(${'month'}, "createdAt") as period,
                 type,
                 SUM(amount) as total
             FROM "Transaction"

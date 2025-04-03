@@ -70,11 +70,8 @@ export class TransactionController {
 
     @Get('groupBy')
     @UsePipes(new ValidationPipe())
-    findTransactionByPeriod(
-        @Req() req,
-        @Body() groupByDto: GroupByDto
-    ) {
-        return this.transactionService.findTransactionByPeriod(+req.user.id, groupByDto.period);
+    findTransactionByPeriod(@Req() req) {
+        return this.transactionService.findTransactionByPeriod(+req.user.id);
     }
 
     @Get('total')
