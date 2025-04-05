@@ -5,9 +5,17 @@ interface CategoryProps {
     id: string;
     title: string;
     createdAt: string;
+    deleteCategory: (id: string) => void;
 }
 
-export default function Category({ id, title, createdAt }: CategoryProps) {
+export default function Category({ id, title, createdAt, deleteCategory }: CategoryProps) {
+    
+    const handleDelete = () => {
+        if(confirm(`Are you sure you wanna delete ${title} category?`)) {
+            deleteCategory(id);
+        }
+    }
+
     return (
         <div className="w-[calc(50%-10px)] h-15 rounded-sm bg-emerald-600 flex justify-between items-center">
             <div className="ml-3">
@@ -16,7 +24,7 @@ export default function Category({ id, title, createdAt }: CategoryProps) {
             </div>
             <div className="flex gap-3 mr-3">
                 <RxUpdate className="w-5 h-5 hover:text-orange-500 duration-300 cursor-pointer"/>
-                <MdDelete className="w-5 h-5 hover:text-red-600 duration-300 cursor-pointer"/>
+                <MdDelete onClick={handleDelete} className="w-5 h-5 hover:text-red-600 duration-300 cursor-pointer"/>
             </div>
         </div>
     )

@@ -8,12 +8,11 @@ export default function CategoryList() {
 
     const categories = useCategoryStore((state) => state.categories);
     const getCategories = useCategoryStore((state) => state.getCategories);
+    const deleteCategory = useCategoryStore((state) => state.deleteCategory);
 
     useEffect(() => {
         getCategories();
     }, [])
-
-    console.log(categories)
 
     return (
         <div className="w-[945px] bg-widget border-none h-96 rounded-xl p-3">
@@ -29,6 +28,7 @@ export default function CategoryList() {
                             id={category.id}
                             title={category.title}
                             createdAt={category.createdAt} 
+                            deleteCategory={deleteCategory}
                         />
                     )) 
                 }
