@@ -2,10 +2,12 @@
 
 import { CreateCategorySchema } from "@/lib/types";
 import { useCategoryStore } from "@/store/categoryStore";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 
 export default function CreateCategory() {
 
+    const inputRef = useRef<HTMLInputElement>(null);
     const addCategory = useCategoryStore((state) => state.addCategory);
 
     const createCategory = (event: React.FormEvent<HTMLFormElement>) => {
@@ -23,6 +25,10 @@ export default function CreateCategory() {
         }
 
         addCategory(result.data);
+
+        if (inputRef.current) {
+            inputRef.current.value = '';
+        }
     }
     
     return (
@@ -36,6 +42,7 @@ export default function CreateCategory() {
                 type="text"
                 name="title"
                 placeholder="Title"
+                ref={inputRef}
                 className="w-64 h-10 border border-gray-400 rounded-md text-sm italic pl-2"
             />
 
