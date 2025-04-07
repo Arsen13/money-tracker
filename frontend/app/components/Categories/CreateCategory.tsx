@@ -1,20 +1,19 @@
 'use client';
 
 import { CreateCategorySchema } from "@/lib/types";
+import { useCategoryStore } from "@/store/categoryStore";
 import toast from "react-hot-toast";
 
 export default function CreateCategory() {
+
+    const addCategory = useCategoryStore((state) => state.addCategory);
 
     const createCategory = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const formData = new FormData(event.currentTarget);
 
-        const category = {
-            title: formData.get('title'),
-        };
-
-        const result = CreateCategorySchema.safeParse(category);
+        const result = CreateCategorySchema.safeParse(Object.fromEntries(formData));
 
         if (!result.success) {
             let errorMessage = '';
@@ -23,7 +22,7 @@ export default function CreateCategory() {
             return;
         }
 
-        console.log(result.data);
+        addCategory(result.data);
     }
     
     return (
