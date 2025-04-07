@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MdDelete } from "react-icons/md";
 import { RxUpdate } from "react-icons/rx";
 
@@ -23,7 +24,10 @@ export default function Category({ id, title, createdAt, deleteCategory }: Categ
                 <p className="text-sm italic text-widget">{createdAt.split('T')[0].replaceAll("-", "/")}</p>
             </div>
             <div className="flex gap-3 mr-3">
-                <RxUpdate className="w-5 h-5 hover:text-orange-500 duration-300 cursor-pointer"/>
+                <Link href={`/categories/?show=true&id=${id}&title=${title}`}>
+                    <RxUpdate className="w-5 h-5 hover:text-orange-500 duration-300 cursor-pointer"/>
+                </Link>
+                
                 <MdDelete onClick={handleDelete} className="w-5 h-5 hover:text-red-600 duration-300 cursor-pointer"/>
             </div>
         </div>

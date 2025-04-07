@@ -1,8 +1,15 @@
 import CategoryList from "../components/Categories/CategoryList";
 import CreateCategory from "../components/Categories/CreateCategory";
+import UpdateCategoryModal from "../components/Categories/UpdateCategoryModal";
 import Navbar from "../components/Nav/Navbar";
 
-export default function Categories() {
+type SearchParamProps = {
+	searchParams: Record<string, string> | null | undefined;
+};
+
+export default function Categories({ searchParams }: SearchParamProps) {
+	const show = searchParams?.show;
+
 	return (
 		<>
 			<Navbar />
@@ -11,6 +18,8 @@ export default function Categories() {
 				<CreateCategory />
 				<CategoryList />
 			</div>
+
+			{show && <UpdateCategoryModal/> }
 		</>
 	)
 }
