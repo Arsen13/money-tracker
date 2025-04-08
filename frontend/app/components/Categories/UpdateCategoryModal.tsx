@@ -1,14 +1,41 @@
 'use client';
 
+import { CreateCategorySchema } from "@/lib/types";
+import { useCategoryStore } from "@/store/categoryStore";
 import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 import { IoClose } from "react-icons/io5";
 
 export default function UpdateCategoryModal() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const updateCategory = useCategoryStore((state) => state.updateCategory);
 
   const id = searchParams.get('id');
   const title = searchParams.get('title');
+
+
+  const handleUpdate = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      const formData = new FormData(event.currentTarget);
+
+      const result = CreateCategorySchema.safeParse(Object.fromEntries(formData));
+
+      if (!result.success) {
+          let errorMessage = '';
+          result.error.issues.forEach(issue => errorMessage += `${issue.path[0]}: ${issue.message}. \n`);
+          toast.error(errorMessage);
+          return;
+      }
+      if (!id) {
+        toast.error("Missing category ID");
+        return;
+      } 
+      
+      updateCategory(id, result.data.title);
+      router.back();
+  }
 
   return (
     <div className="fixed inset-0 bg-black/60 overflow-y-auto h-full w-full flex items-center justify-center">
@@ -16,7 +43,7 @@ export default function UpdateCategoryModal() {
         <div className="text-center">
           <h3 className="text-2xl font-bold text-white">Update category</h3>
           <div className="mt-2 px-7 py-3">
-            <form>
+            <form onSubmit={handleUpdate}>
                 <input 
                     type="text"
                     name="title"

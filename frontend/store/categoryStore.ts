@@ -18,6 +18,7 @@ export type State = {
 export type Actions = {
     getCategories: () => void;
     addCategory: (data: { title: string }) => void;
+    updateCategory: (id: string, title: string) => void;
     deleteCategory: (id: string) => void;
 }
 
@@ -48,6 +49,27 @@ export const useCategoryStore = create<State & Actions>()((set, get) => ({
                 toast.error(error.response?.data.message);
             } else {
                 console.log('Error with creating new category', error)
+            }
+        }
+    },
+
+    updateCategory: async (id: string, title: string) => {
+        try {
+            const response = await axiosInstance.patch(`categories/${id}`, { title });
+
+            if (response.status == 200) {
+                const updateCategories = get().categories.filter(item => item.id != id);
+                updateCategories.push(response.data);
+                set(() => ({ categories: updateCategories }));
+            } else {
+                toast.error(response.data.message);
+            }
+
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                toast.error(error.response?.data.message);
+            } else {
+                console.log('Error with updatind category', error);
             }
         }
     },
