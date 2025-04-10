@@ -35,6 +35,7 @@ export default function UpdateCategoryModal() {
       
       updateCategory(id, result.data.title);
       router.back();
+      toast.success("Category was successfully updated");
   }
 
   return (
