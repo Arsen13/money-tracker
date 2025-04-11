@@ -8,6 +8,8 @@ export default function TransactionList() {
 
 	const transactions = useTransactionStore((state) => state.transactions);
 	const getTransactions = useTransactionStore((state) => state.getTransactions);
+	const incrementPage = useTransactionStore((state) => state.incrementPage);
+	const decrementPage = useTransactionStore((state) => state.decrementPage);
 
 	useEffect(() => {
 		getTransactions();
@@ -35,10 +37,10 @@ export default function TransactionList() {
 				}
 			</div>
 			<div className="flex justify-center gap-4">
-				<button className="bg-customBlue text-sm px-2 py-1 rounded-md cursor-pointer hover:bg-orange-300 hover:text-widget duration-750">
+				<button onClick={decrementPage} className="bg-customBlue text-sm px-2 py-1 rounded-md cursor-pointer hover:bg-blue-500 hover:text-widget duration-750">
 					Prev
 				</button>
-				<button className="bg-customBlue text-sm px-2 py-1 rounded-md cursor-pointer hover:bg-orange-300 hover:text-widget duration-750">
+				<button onClick={incrementPage} className="bg-customBlue text-sm px-2 py-1 rounded-md cursor-pointer hover:bg-blue-500 hover:text-widget duration-750">
 					Next
 				</button>
 			</div>
