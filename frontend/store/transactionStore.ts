@@ -1,6 +1,8 @@
 import { axiosInstance } from "@/lib/axiosInstance";
 import { create } from "zustand";
 import { Category } from "./categoryStore";
+import { AxiosError } from "axios";
+import toast from "react-hot-toast";
 
 export type Transaction = {
     id: string;
@@ -25,6 +27,7 @@ export type Actions = {
     getTransactions: () => void;
     incrementPage: () => void;
     decrementPage: () => void;
+    deleteTransaction: (id: string) => void;
 }
 
 export const useTransactionStore = create<State & Actions>()((set, get) => ({
@@ -36,7 +39,7 @@ export const useTransactionStore = create<State & Actions>()((set, get) => ({
     getTransactions: async (page = get().page) => {
         const { limit } = get();
 
-        const response = await axiosInstance.get(`transactions/pagination?page=${page}&limit=${limit}&sortBy=createdAt&sortOrder=asc`);
+        const response = await axiosInstance.get(`transactions/pagination?page=${page}&limit=${limit}&sortBy=id&sortOrder=asc`);
 
         if (response.status == 200) {
             set(() => ({ transactions: response.data }));
@@ -65,6 +68,26 @@ export const useTransactionStore = create<State & Actions>()((set, get) => ({
             const decrement = currentPage - 1;
             set(({ page: decrement }));
             get().getTransactions();
+        }
+    },
+
+    deleteTransaction: async (id: string) => {
+        try {
+            const response = await axiosInstance.delete(`transactions/${id}`);
+
+            if (response.status == 200) {
+                get().getTransactions();
+                toast.success("Transaction was successfully deleted")
+            } else {
+                toast.error(response.data.message)
+            }
+
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                toast.error(error.response?.data.message)
+            } else {
+                console.log(`Error with delete transaction id: ${id}`)
+            }
         }
     }
 }))

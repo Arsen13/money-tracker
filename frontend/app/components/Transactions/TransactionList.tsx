@@ -10,6 +10,7 @@ export default function TransactionList() {
 	const getTransactions = useTransactionStore((state) => state.getTransactions);
 	const incrementPage = useTransactionStore((state) => state.incrementPage);
 	const decrementPage = useTransactionStore((state) => state.decrementPage);
+	const deleteTransaction = useTransactionStore((state) => state.deleteTransaction);
 
 	useEffect(() => {
 		getTransactions();
@@ -32,6 +33,7 @@ export default function TransactionList() {
 							amount={transaction.amount}
 							type={transaction.type}
 							date={transaction.createdAt}
+							deleteTransaction={deleteTransaction}
 						/>
 					))
 				}
