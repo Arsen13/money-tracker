@@ -50,7 +50,7 @@ export default function CreateTransaction() {
 			<p className="text-center text-xl">New Transaction</p>
 			
 			<div className="w-full flex justify-around">
-				<div className="flex flex-col gap-4">
+				<div className="flex flex-col gap-4 mt-4">
 					<input 
 						type="text"
 						name="title"
@@ -71,11 +71,11 @@ export default function CreateTransaction() {
 
 				<div className="flex flex-col gap-2 justify-center">
 					<label htmlFor="category">
-						<span>Category: </span>
+						<p className="text-center">Category: </p>
 						<select 
 							id="category"
 							name="category" 
-							className="bg-customBlue h-8 text-sm rounded-md focus:ring-blue-500 px-2"
+							className="bg-customBlue h-8 w-full text-sm rounded-md focus:ring-blue-500 px-2"
 							required
 						>
 							{categories.map((category) => (
@@ -90,7 +90,7 @@ export default function CreateTransaction() {
 					</label>
 
 					<div>
-						<p>Type:</p>
+						<p className="text-center">Type:</p>
 						<label className="mr-2">
 							<input 
 								type="radio"
@@ -115,7 +115,7 @@ export default function CreateTransaction() {
 
 			<button
 				type="submit"
-				className="bg-customBlue text-md px-2 py-1 rounded-md cursor-pointer hover:bg-blue-600 duration-500 mt-3.5"
+				className="bg-customBlue text-md -mt-3 px-6 py-2 rounded-md cursor-pointer hover:bg-blue-600 duration-500"
 			>
 				Create
 			</button>
