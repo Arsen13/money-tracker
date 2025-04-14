@@ -17,6 +17,9 @@ export class TransactionService {
                 title: createTransactionDto.title,
                 type: createTransactionDto.type,
                 amount: createTransactionDto.amount
+            },
+            include: {
+                category: true,
             }
         })
     }
