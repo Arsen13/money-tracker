@@ -20,7 +20,7 @@ export default function Transaction({ id, title, category, amount, type, date, d
 	}
 
 	return (
-		<div className="w-full bg-customBlue flex justify-around items-center rounded-sm h-12 hover:bg-purple-600 duration-500">
+		<div className="w-full bg-customBlue flex justify-around items-center rounded-sm h-12 hover:bg-blue-600 duration-500">
 			<p className="w-[50px] text-center border-r-1">{id}</p>
 			<p className="w-[200px] text-left truncate border-r-1">{title}</p>
 			<p className="w-[150px] text-left truncate border-r-1">{category}</p>

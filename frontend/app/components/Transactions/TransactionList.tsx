@@ -17,7 +17,7 @@ export default function TransactionList() {
 	}, [])
 
 	return (
-		<div className="w-[945px] bg-widget border-none h-96 rounded-xl p-3">
+		<div className="w-[945px] bg-widget border-none h-96 rounded-xl p-3 relative">
 			<h3 className="text-xl">Transactions</h3>
 			<div className="mt-3 mb-2 flex flex-col gap-3">
 				{transactions.length <= 0
@@ -38,11 +38,11 @@ export default function TransactionList() {
 					))
 				}
 			</div>
-			<div className="flex justify-center gap-4">
-				<button onClick={decrementPage} className="bg-customBlue text-sm px-2 py-1 rounded-md cursor-pointer hover:bg-blue-500 hover:text-widget duration-750">
+			<div className="flex justify-center gap-4 absolute bottom-2 right-106">
+				<button onClick={decrementPage} className="bg-customBlue text-sm px-2 py-1 rounded-md cursor-pointer hover:bg-blue-600 duration-750">
 					Prev
 				</button>
-				<button onClick={incrementPage} className="bg-customBlue text-sm px-2 py-1 rounded-md cursor-pointer hover:bg-blue-500 hover:text-widget duration-750">
+				<button onClick={incrementPage} className="bg-customBlue text-sm px-2 py-1 rounded-md cursor-pointer hover:bg-blue-600 duration-750">
 					Next
 				</button>
 			</div>

@@ -20,7 +20,7 @@ export const SignUpSchema = z.
 
 export const CreateTransactionSchema = z.object({
     title: z.string().min(3),
-    amount: z.number(),
+    amount: z.string(),
     category: z.string(),
     type: z.string(),
 })

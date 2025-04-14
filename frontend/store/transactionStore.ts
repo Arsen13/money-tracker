@@ -23,10 +23,18 @@ export type State = {
     maxPageNumber: number;
 }
 
+type NewTransactionT = {
+    title: string;
+    amount: string;
+    category: string;
+    type: string;
+};
+
 export type Actions = {
     getTransactions: () => void;
     incrementPage: () => void;
     decrementPage: () => void;
+    addTransaction: (data: NewTransactionT) => void;
     deleteTransaction: (id: string) => void;
 }
 
@@ -68,6 +76,32 @@ export const useTransactionStore = create<State & Actions>()((set, get) => ({
             const decrement = currentPage - 1;
             set(({ page: decrement }));
             get().getTransactions();
+        }
+    },
+
+    addTransaction: async (data: NewTransactionT) => {
+        try {
+            const response = await axiosInstance.post('transactions', {
+                title: data.title,
+                amount: Number(data.amount),
+                type: data.type,
+                category: Number(data.category),
+            });
+
+            if (response.status == 201) {
+                if (get().transactions.length < get().limit) {
+                    set(() => ({ transactions: [...get().transactions, response.data] }));
+                }
+                toast.success(`Transaction was successfully created`);
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                toast.error(error.response?.data.message);
+            } else {
+                console.log(`Error with create transaction`)
+            }
         }
     },
 
