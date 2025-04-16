@@ -1,25 +1,22 @@
-import CategoryList from "../components/Categories/CategoryList";
-import CreateCategory from "../components/Categories/CreateCategory";
-import UpdateCategoryModal from "../components/Categories/UpdateCategoryModal";
-import Navbar from "../components/Nav/Navbar";
+import { SearchParamProps } from '@/lib/types';
+import CategoryList from '../components/Categories/CategoryList';
+import CreateCategory from '../components/Categories/CreateCategory';
+import UpdateCategoryModal from '../components/Categories/UpdateCategoryModal';
+import Navbar from '../components/Nav/Navbar';
 
-type SearchParamProps = {
-	searchParams: Record<string, string> | null | undefined;
-};
+export default async function Categories({ searchParams }: SearchParamProps) {
+  const searchParam = await searchParams;
 
-export default function Categories({ searchParams }: SearchParamProps) {
-	const show = searchParams?.show;
+  return (
+    <>
+      <Navbar />
 
-	return (
-		<>
-			<Navbar />
+      <div className='mt-10 flex flex-col items-center justify-center gap-8'>
+        <CreateCategory />
+        <CategoryList />
+      </div>
 
-			<div className="flex flex-col mt-10 justify-center items-center gap-8">
-				<CreateCategory />
-				<CategoryList />
-			</div>
-
-			{show && <UpdateCategoryModal/> }
-		</>
-	)
+      {searchParam?.show && <UpdateCategoryModal />}
+    </>
+  );
 }
