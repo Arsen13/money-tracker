@@ -1,15 +1,18 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+@import 'tailwindcss';
 
 @plugin "tailwindcss-animate";
+@plugin "daisyui";
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
   --widget: #121212;
-  --customBlue: #0085FF;
-  --customPurple: #8323BE;
+  --customBlue: #0085ff;
+  --customPurple: #8323be;
   --radius: 0.625rem;
-  --background: #ffffff;
+  --background: #1e1e1e;
   --foreground: #171717;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -83,20 +86,22 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --font-roboto: 'Roboto', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --widget: #121212;
-    --customBlue: #0085FF;
-    --customPurple: #E22EBB;
+    --customBlue: #0085ff;
+    --customPurple: #e22ebb;
     --background: #1e1e1e;
     --foreground: #ededed;
   }
 }
 
-body {
-  font-family: var(--font-mono), Helvetica, sans-serif;
+html {
+  font-family: var(--font-roboto), Roboto, sans-serif;
+  background-color: var(--background);
 }
 
 .dark {
