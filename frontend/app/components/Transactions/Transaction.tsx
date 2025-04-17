@@ -28,7 +28,9 @@ export default function Transaction({
   };
 
   return (
-    <div className='bg-customBlue flex h-12 w-full items-center justify-around rounded-sm duration-500 hover:bg-blue-600'>
+    <div
+      className={`${type == 'INCOME' ? 'bg-customBlue hover:bg-blue-600' : 'bg-amber-600 hover:bg-amber-700'} flex h-12 w-full items-center justify-around rounded-sm duration-500`}
+    >
       <p className='w-[50px] border-r-1 text-center'>{id}</p>
       <p className='w-[200px] truncate border-r-1 text-left'>{title}</p>
       <p className='w-[150px] truncate border-r-1 text-left'>{category}</p>
