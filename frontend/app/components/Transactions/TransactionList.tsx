@@ -16,7 +16,7 @@ export default function TransactionList() {
 
   useEffect(() => {
     getTransactions();
-  }, []);
+  }, [getTransactions]);
 
   return (
     <div className='bg-widget relative h-96 w-[945px] rounded-xl border-none p-3'>

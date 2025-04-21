@@ -12,7 +12,7 @@ export default function CategoryList() {
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [getCategories]);
 
   return (
     <div className='bg-widget h-96 w-[945px] rounded-xl border-none p-3'>

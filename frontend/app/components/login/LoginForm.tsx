@@ -36,7 +36,7 @@ export default function LoginForm() {
 
       <div className='my-2 flex flex-col'>
         <Link href='/signup' className='hover:underline'>
-          Don't have an account?
+          Don&apos;t have an account?
         </Link>
 
         <AuthButton title={'Login'} />
