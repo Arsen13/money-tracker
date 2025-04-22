@@ -1,11 +1,10 @@
-import { SearchParamProps } from '@/lib/types';
 import Navbar from '../components/Nav/Navbar';
 import CreateTransaction from '../components/Transactions/CreateTransacrion';
 import TransactionList from '../components/Transactions/TransactionList';
 import UpdateTransactionModal from '../components/Transactions/UpdateTransactionModal';
 
-export default async function Transactions({ searchParams }: SearchParamProps) {
-  const searchParam = await searchParams;
+export default function Transactions({ searchParams }: any) {
+  const show = searchParams?.show;
 
   return (
     <>
@@ -16,7 +15,7 @@ export default async function Transactions({ searchParams }: SearchParamProps) {
         <TransactionList />
       </div>
 
-      {searchParam?.show && <UpdateTransactionModal />}
+      {show && <UpdateTransactionModal />}
     </>
   );
 }

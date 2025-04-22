@@ -54,10 +54,6 @@ export type UserT = {
   lastName: string;
 } | null;
 
-export type SearchParamProps = {
-  searchParams: Record<string, string> | null | undefined;
-};
-
 export type Transaction = {
   id: string;
   userId: string;
