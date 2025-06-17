@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const axiosInstance = axios.create({
-    baseURL: "http://localhost:4200/api",
-    withCredentials: true
+  baseURL: 'https://money-tracker-backend-snowy.vercel.app/api',
+  withCredentials: true,
 });
