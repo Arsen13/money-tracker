@@ -1,10 +1,13 @@
-import { User } from "@prisma/client";
-import { IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { User } from '@prisma/client';
+import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateCategoryDto {
-    @IsNotEmpty()
-    readonly title: string;
+  @ApiProperty()
+  @IsNotEmpty()
+  readonly title: string;
 
-    @IsOptional()
-    readonly user?: User;
+  @ApiProperty()
+  @IsOptional()
+  readonly user?: User;
 }

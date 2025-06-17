@@ -1,4 +1,8 @@
-import { PickType } from "@nestjs/mapped-types";
-import { CreateCategoryDto } from "./create-category.dto";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
-export class UpdateCategoryDto extends PickType(CreateCategoryDto, ['title'] as const) {}
+export class UpdateCategoryDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  readonly title: string;
+}

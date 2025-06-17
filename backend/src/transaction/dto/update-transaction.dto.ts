@@ -1,4 +1,18 @@
-import { PickType } from "@nestjs/mapped-types";
-import { CreateTransactionDto } from "./create-transaction.dto";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class UpdateTransactionDto extends PickType(CreateTransactionDto, ['title', 'type', 'amount']) {}
+export class UpdateTransactionDto {
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  title: string;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  amount: number;
+
+  @ApiProperty()
+  @IsString()
+  type: 'EXPENSE' | 'INCOME';
+}

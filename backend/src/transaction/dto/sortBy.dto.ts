@@ -1,6 +1,8 @@
-import { IsIn } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsIn } from 'class-validator';
 
 export class SortByDto {
-    @IsIn(['amount', 'type', 'createdAt', 'id'])
-    sortBy: string
+  @ApiProperty()
+  @IsIn(['amount', 'type', 'createdAt', 'id'])
+  sortBy: string;
 }
